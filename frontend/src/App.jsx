@@ -1,19 +1,43 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { useRef } from "react";
+import axios from "axios";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const fileInputRef = useRef(null);
+
+  const submitForm = (e) => {
+    // Do not redirect / reload page
+    e.preventDefault();
+    // Check if ref was initialized
+    if (fileInputRef.current == null) return;
+
+    // Get file from ref
+    const fileToUpload = fileInputRef.current.files[0];
+    // Create new FormData object to hold the data we want to send
+    const formData = new FormData();
+    // Populate that object
+    formData.append("fileToUpload", fileToUpload);
+
+    axios
+      .post("http://localhost:8080/uploadSingle", formData)
+      .then(() => {
+        console.log("Upload success");
+      })
+      .catch(() => {
+        console.error("Upload failed");
+      });
+  };
 
   return (
     <div className="App">
       <form
-        action="http://localhost:8080/uploadSingle"
-        method="POST"
-        encType="multipart/form-data"
+        // action="http://localhost:8080/uploadSingle"
+        // method="POST"
+        // encType="multipart/form-data"
+        onSubmit={submitForm}
       >
         <label>Choose file to upload</label>
-        <input type="file" name="fileToUpload" />
+        <input type="file" name="fileToUpload" ref={fileInputRef} />
         <input type="submit" />
       </form>
     </div>

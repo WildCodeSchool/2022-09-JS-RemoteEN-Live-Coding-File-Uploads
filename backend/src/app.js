@@ -1,7 +1,10 @@
 import express from "express";
 import multer from "multer";
+import cors from "cors";
 
 const app = express();
+app.use(cors({origin: "http://localhost:5173"}))
+
 const fileUploadMiddleware = multer({
   dest: "uploads/",
 });
