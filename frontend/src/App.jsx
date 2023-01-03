@@ -19,7 +19,7 @@ function App() {
     formData.append("fileToUpload", fileToUpload);
 
     axios
-      .post("http://localhost:8080/uploadSingle", formData)
+      .post("http://localhost:8080/media", formData)
       .then(() => {
         console.log("Upload success");
       })
@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <form
-        // action="http://localhost:8080/uploadSingle"
+        // action="http://localhost:8080/media"
         // method="POST"
         // encType="multipart/form-data"
         onSubmit={submitForm}
